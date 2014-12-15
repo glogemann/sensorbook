@@ -117,7 +117,7 @@ function createMap()
 {  
    var mapOptions =
    { 
-      credentials:"AkxNNo_pPk2EkGAxUr2XQATBmzqXZF_xSC8TUIul3j4z_KmtU0105hejiiwJXxSW", 
+      credentials:"{Your Map Credentials}", 
       mapTypeId:Microsoft.Maps.MapTypeId.road, 
       center: new Microsoft.Maps.Location(<?php echo $lat."";?>,<?php echo "".$lon."";?>),
       zoom: 8
