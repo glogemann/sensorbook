@@ -1,4 +1,5 @@
-﻿// The MIT License (MIT) 
+﻿<?php
+// The MIT License (MIT) 
  
 // Copyright (c) 2014 Microsoft DX  
  
@@ -19,8 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 // SOFTWARE. 
-<?php
-	session_start(); 
+  session_start(); 
   $pipename = $_GET['p']; 
      
   require_once('config.php');
