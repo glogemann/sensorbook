@@ -20,46 +20,50 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 // SOFTWARE.
-require_once 'configdata.php';
+require_once('config.php');
+try{
+    $timestamp = time();
+    
+	$scon_pipename = $_GET["p"];
+    if(!$scon_pipename) {
+      echoresult("ERROR",$timestamp,"no identifier");
+      die(); 
+    }
 
-//Azure Storage connection string 
-require_once 'WindowsAzure/WindowsAzure.php';
-use WindowsAzure\Common\ServicesBuilder;
-use WindowsAzure\Common\ServiceException; 
-use WindowsAzure\Table\Models\Entity;
-use WindowsAzure\Table\Models\EdmType;
+	$scon_key = $_GET["k"];
+    if(!$scon_key) {
+      echoresult("ERROR",$timestamp,"no key");
+      die(); 
+    }
 
 
-$tableRestProxy = ServicesBuilder::getInstance()->createTableService($connectionString);
-// configure adminkey
+	// connect to database
+	$conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+	if($conn == null) die("Could not connect to database"); 
+    $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+	
+    // query pipe
+    $sql = $conn->prepare("SELECT * FROM serialconnections WHERE pipename = ?");
+    $sql->bindValue(1,$scon_pipename); 
+    $sql->execute();
 
-// configure your general accesstoken 
-$atoken  = $_GET["t"]; 
-if($accesstoken != null) {
-  if($accesstoken == $atoken) {
-  }
-  else  {
-    if($_SESSION['accesstoken'] == $accesstoken) {
-      
+    $scon = $sql->fetchAll();
+    if(count($scon)==1) {
+        $info1 =  "{\"".$scon_key."\" = \"".$scon[0][$scon_key]."\"}";
+        echoresult("ok",$timestamp,$info1);
+        die(); 
     }
     else {
-      $admin = $_GET["a"];
-      if($admin == $adminkey) { 
-
-      }
-      else {
-        echoresult("ERROR",$timestamp,"Accces Denied");
-        die();
-      }
+        echoresult("ERROR",$timestamp,"not found");
+        die(); 
     }
-  } 
 }
-function echoresult($result, $timestamp, $info) {
-  if($_GET["j"]!=null) {
-    echo "{\"result\": \"".$result."\", \"timestamp\":\"".$timestamp."\", \"info\": \"".$info."\"}";
-  }
-  else {
-    echo $result.":".$info;
-  }
+catch(Exception $e){
+    echo $e; 
+    die();
 }
+
+// timestamp = masterkey; 
+echoresult("OK",$timestamp,"");
+die(); 	
 ?>

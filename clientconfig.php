@@ -19,12 +19,9 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-// SOFTWARE. 
+// SOFTWARE.
 
-$server = "xxx";
-$user = "xxx";
-$pwd = "xxx";
-$db = "xxx";
+require_once 'configdata.php';
 
 //Azure Storage connection string 
 require_once 'WindowsAzure/WindowsAzure.php';
@@ -32,8 +29,6 @@ use WindowsAzure\Common\ServicesBuilder;
 use WindowsAzure\Common\ServiceException; 
 use WindowsAzure\Table\Models\Entity;
 use WindowsAzure\Table\Models\EdmType;
-
-$connectionString = "DefaultEndpointsProtocol=http;AccountName=serialhub;AccountKey=xxx";
 
 $tableRestProxy = ServicesBuilder::getInstance()->createTableService($connectionString);
 
