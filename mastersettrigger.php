@@ -42,6 +42,11 @@ try{
     }
      	
     $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     
     $sql = $conn->prepare("SELECT * FROM serialconnections WHERE pipename = ? AND masterkey = ?");

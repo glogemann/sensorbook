@@ -19,7 +19,7 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-// SOFTWARE.
+// SOFTWARE. 
 require_once 'configdata.php';
 
 //Azure Storage connection string 
@@ -54,12 +54,23 @@ if($accesstoken != null) {
     }
   } 
 }
+
 function echoresult($result, $timestamp, $info) {
   if($_GET["j"]!=null) {
-    echo "{\"result\": \"".$result."\", \"timestamp\":\"".$timestamp."\", \"info\": \"".$info."\"}";
+    if($_GET["r"]!=null) {
+      if( $result != "OK") {
+         echo "{\"result\": \"".$result."\", \"timestamp\":\"".$timestamp."\", \"info\": \"".$info."\"}";
+         http_response_code(400); 
+      }
+    }
+    else {
+      echo "{\"result\": \"".$result."\", \"timestamp\":\"".$timestamp."\", \"info\": \"".$info."\"}";
+      http_response_code(200);
+    }
   }
   else {
     echo $result.":".$info;
+    http_response_code(200); 
   }
 }
 ?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 // The MIT License (MIT) 
  
 // Copyright (c) 2014 Microsoft DX  
@@ -19,7 +19,7 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-// SOFTWARE. 
+// SOFTWARE.  
 require_once('config.php'); 
 
 try{
@@ -42,7 +42,18 @@ try{
     }
      	
     $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
+    
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     
     $sql = $conn->prepare("SELECT * FROM serialconnections WHERE pipename = ? AND masterkey = ?");
     $sql->bindValue(1,$scon_pipename); 
@@ -73,7 +84,6 @@ try{
              $qry->bindValue(4,$timestamp); 
              $qry->execute(); 
           }
-
     }
 }
 catch(Exception $e){

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // The MIT License (MIT) 
  
 // Copyright (c) 2014 Microsoft DX  
@@ -40,6 +40,10 @@
   }
   else {
     $m = $scon[0]['messageout'];
+	$masterkey = $scon[0]['masterkey'];
+	$pipename = $scon[0]['pipename'];
+
+
 	  try {
 	  	$x = json_decode($m);
       $type = $x->{'type'};
@@ -92,12 +96,14 @@ function onLoadPage() {
       document.getElementById("imageSensorImg").style.height="0px";
       document.getElementById("positionSensor").style.visibility="collapse";
       createMap();   
-    } else if("<?php echo $type;?>"==="imagesensor") {
+    } else 
+	if("<?php echo $type;?>"==="imagesensor") {
       document.getElementById("Error").style.visibility="collapse";
       document.getElementById("dwdObservationSensor").style.visibility="collapse";
       document.getElementById("mapDiv").style.height="0px";
       document.getElementById("positionSensor").style.visibility="collapse";
-    } else if("<?php echo $type;?>"==="position") {
+    } else 
+	if("<?php echo $type;?>"==="position") {
       document.getElementById("Error").style.visibility="collapse";
       document.getElementById("dwdObservationSensor").style.visibility="collapse";
       document.getElementById("imageSensor").style.visibility="collapse";
@@ -117,7 +123,7 @@ function createMap()
 {  
    var mapOptions =
    { 
-      credentials:"{Your Map Credentials}", 
+      credentials:"AkxNNo_pPk2EkGAxUr2XQATBmzqXZF_xSC8TUIul3j4z_KmtU0105hejiiwJXxSW", 
       mapTypeId:Microsoft.Maps.MapTypeId.road, 
       center: new Microsoft.Maps.Location(<?php echo $lat."";?>,<?php echo "".$lon."";?>),
       zoom: 8
@@ -140,10 +146,30 @@ function createMap()
    //map.entities.push(infobox); 
 }
 
-function Hallo() {
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
 }
 
- 
+function DeleteButtonOnClick() 
+{
+	var r = confirm("Do you really want do delete this Sensor");
+	if (r == true) {
+		x = "You pressed OK!";
+		var s = "close.php?t="+"<?php echo $_SESSION['accesstoken']."&p=".$pipename."&m=".$masterkey; ?>";
+		alert(s);
+
+		alert(httpGet(s));
+		history.back(); 
+	} else {
+		x = "You pressed Cancel!";
+	} 
+}
 
 </script>
 
@@ -158,6 +184,9 @@ function Hallo() {
 	<h1>Sensor: <?php echo utf8_decode ( $x->{'name'});?> (<?php echo "Type:".$type;?>) </h1>
 	
   <hr />
+  <stackpanel>
+    <input id="DeleteButton" type="button" value="Delete Sensor" onclick="DeleteButtonOnClick();" />
+  </stackpanel>
   <stackpanel>
      <div id='positionSensor'> 
       <stackpanel>

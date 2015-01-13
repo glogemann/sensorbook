@@ -19,7 +19,7 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-// SOFTWARE.
+// SOFTWARE. 
 require_once('config.php');
 try{
     $timestamp = time();
@@ -39,7 +39,11 @@ try{
 
 	// connect to database
 	$conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
-	if($conn == null) die("Could not connect to database"); 
+	if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	
     // query pipe
@@ -65,5 +69,5 @@ catch(Exception $e){
 
 // timestamp = masterkey; 
 echoresult("OK",$timestamp,"");
-die(); 	
+die();
 ?>

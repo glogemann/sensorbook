@@ -20,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 // SOFTWARE. 
+session_start(); 
 require_once('config.php'); 
 
 try{
@@ -37,6 +38,11 @@ try{
 	  $timestamp = time(); 
 
     $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     $sql = $conn->prepare("SELECT * FROM serialconnections WHERE pipename = ? AND masterkey = ? ");
     $sql->bindValue(1,$scon_pipename); 

@@ -26,24 +26,32 @@ use WindowsAzure\Table\Models\Entity;
 use WindowsAzure\Table\Models\EdmType;
 
 try{
+	  $timestamp = time();
+
     $scon_pipename = $_GET["p"];
     $scon_messagein = $_GET["mi"];
     if(!$scon_pipename) {
-      die("ERROR:no identifier"); 
+      echoresult("ERROR", $timestamp, "no identifier");
+      die(); 
     }
     
     $scon_clientkey = $_GET["c"];
     $scon_clientname = $_GET["cn"];
      	
-	  $timestamp = time();
-    
     $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     
     $scon = CheckPermission($conn, $scon_pipename, $scon_clientkey);
     
-    if($scon==null) 
-      die("ERROR:Access Denied1");
+    if($scon==null) {
+      echoresult("ERROR", $timestamp, "Access Denied");
+      die(); 
+    }
     
     if(!$scon) {
       echo "read again";
@@ -53,7 +61,8 @@ try{
       $scon = $sql->fetchAll(); 
     }
     if(count($scon)!=1) {
-      die("ERROR:not found"); 
+      echoresult("ERROR", $timestamp, "not found");
+      die(); 
     }
     else {
       $scon_masterkey = $scon[0]['masterkey'];
@@ -64,7 +73,7 @@ try{
       if($scon[0]['clientwritemode']=="AOW") {
         $mi = $scon[0]['messagein'].$scon_messagein;
         if(strlen($mi)>199) {
-          die("ERROR:max buffer"); 
+          echoresult("ERROR", $timestamp, "max buffer");
         }
       }
       else {
@@ -98,7 +107,9 @@ try{
         echo "-----ERROR-----";
         $code = $e->getCode();
         $error_message = $e->getMessage();
-        echo $code.": ".$error_message;
+        $err = "tableerror".$code.": ".$error_message;
+        echoresult("ERROR", $timestamp, $err);
+       
         die(); 
       }
     }
@@ -106,5 +117,5 @@ try{
 catch(Exception $e){
     die(print_r($e));
 }
-echo "ok:".$timestamp;
+echoresult("OK", $timestamp, "$timestamp");
 ?>

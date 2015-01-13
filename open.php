@@ -130,6 +130,11 @@ try{
 	
 
     $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     
     // is masterkey is present this is an reopen of an existing pipe
@@ -177,8 +182,9 @@ try{
         $tableRestProxy->createTable($scon_pipename.$timestamp);
       }
       catch(ServiceException $e){
-          echo $e; 
-          die($error_message);
+          $err = "tableerror ".$error_message
+          echoresult("ERROR",$timestamp,$err);
+          die();
       }
 
       try{      

@@ -26,7 +26,7 @@ try{
     // check pipename 
     $scon_pipename = $_GET["p"];
     if(!$scon_pipename) {
-      echo "ERROR: no pipename";
+      echoresult("ERROR", $timestamp, "no pipename");
       die(); 
     }
 
@@ -38,14 +38,19 @@ try{
     //}
     
     $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     
 	  $timestamp = time(); 
     if(CheckPermission($conn, $scon_pipename, $scon_clientkey)!=null) {
-      echo "OK:".$timestamp;
+      echoresult("OK", $timestamp, $timestamp);
     }
     else {
-      echo "ERROR:Access Denied";
+      echoresult("ERROR", $timestamp, "access denied");
     }
 }
 catch(Exception $e){

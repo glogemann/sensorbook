@@ -23,23 +23,31 @@
 require_once('clientconfig.php'); 
 
 try{
+	  $timestamp = time();
+    
     $scon_pipename = $_GET["p"];
     if(!$scon_pipename) {
-      die("ERROR:no identifier"); 
+      echoresult("ERROR", $timestamp, "no identifier");
+      die(); 
     }
     
     $scon_clientkey = $_GET["c"];
     $scon_clientname = $_GET["cn"];
      	
-	  $timestamp = time(); 
-
     $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    if($conn == null) 
+    {
+        echoresult("ERROR",$timestamp,"db error");
+        die();  
+    }
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     
     $scon = CheckPermission($conn, $scon_pipename, $scon_clientkey);
     
-    if($scon==null) 
-      die("ERROR:Access Denied DB");
+    if($scon==null) {
+      echoresult("ERROR", $timestamp, "db error");
+      die(); 
+    }
     
     if(!$scon) {
       $sql = $conn->prepare("SELECT * FROM serialconnections WHERE pipename = ?");
@@ -48,7 +56,8 @@ try{
       $scon = $sql->fetchAll();
     } 
     if(count($scon)!=1) {
-      die("Error:not found"); 
+      echoresult("ERROR", $timestamp, "not found");
+      die(); 
     }
     else {
       $m = $scon[0]['messageout'];
@@ -65,5 +74,5 @@ try{
 catch(Exception $e){
     die(print_r($e));
 }
-echo "ok:".$m;
+echoresult("OK", $timestamp, $m);
 ?>
