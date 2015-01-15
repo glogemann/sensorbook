@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // The MIT License (MIT) 
  
 // Copyright (c) 2014 Microsoft DX  
@@ -123,7 +123,7 @@ function createMap()
 {  
    var mapOptions =
    { 
-      credentials:"AkxNNo_pPk2EkGAxUr2XQATBmzqXZF_xSC8TUIul3j4z_KmtU0105hejiiwJXxSW", 
+      credentials:"your_key", 
       mapTypeId:Microsoft.Maps.MapTypeId.road, 
       center: new Microsoft.Maps.Location(<?php echo $lat."";?>,<?php echo "".$lon."";?>),
       zoom: 8
