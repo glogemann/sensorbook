@@ -129,7 +129,7 @@ try{
      	
 	
 
-    $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    $conn = new PDO( $dbConnectionString, $user, $pwd);
     if($conn == null) 
     {
         echoresult("ERROR",$timestamp,"db error");

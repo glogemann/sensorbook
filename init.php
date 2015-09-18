@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // The MIT License (MIT) 
  
 // Copyright (c) 2014 Microsoft DX  
@@ -25,11 +25,10 @@ echo "INIT Serial Hub (c) Gunter Logemann";
 require_once('config.php'); 
 
 try{
-    $conn = new PDO( "sqlsrv:Server= $server ; Database = $db ", $user, $pwd);
+    $conn = new PDO( $dbConnectionString, $user, $pwd);
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     $sql = "CREATE TABLE serialconnections(
-    id INT NOT NULL IDENTITY(1,1) 
-    PRIMARY KEY(id),
+    id INT NOT NULL PRIMARY KEY,
     pipename VARCHAR(40),
     masterkey VARCHAR(40),
     clientkey VARCHAR(40),
