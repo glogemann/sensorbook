@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 // The MIT License (MIT) 
  
 // Copyright (c) 2014 Microsoft DX  
