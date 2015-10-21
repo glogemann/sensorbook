@@ -191,8 +191,7 @@ try{
         $permissiontablename = "Permission".$scon_pipename;
         //echo $permissiontablename;
         $qry1 = $conn->prepare("CREATE TABLE ".$permissiontablename." (
-                              id INT NOT NULL IDENTITY(1,1) 
-                              PRIMARY KEY(id),
+                              id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                               clientname VARCHAR(40),
                               clientkey VARCHAR(40),
                               clientpermissioninfo VARCHAR(100), 

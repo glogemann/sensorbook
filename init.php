@@ -28,7 +28,7 @@ try{
     $conn = new PDO( $dbConnectionString, $user, $pwd);
     $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     $sql = "CREATE TABLE serialconnections(
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     pipename VARCHAR(40),
     masterkey VARCHAR(40),
     clientkey VARCHAR(40),
