@@ -67,7 +67,7 @@
 			//echo "<table style=\"width: 100%\">\n\r";
 			echo "<table>\n\r";
 			echo "<tr>\n\r";
-			echo "<td style=\"width: 100px\"><img alt=\"\" height=\"30\" src=\"\Assets\Sensor.png?p=".$scon[$i]['pipename']."\" width=\"30\"><br><a href=\"viewsensor.php?p=".$scon[$i]['pipename']."\">View Sensor</a></td>\n\r";
+			echo "<td style=\"width: 100px\"><img alt=\"\" height=\"30\" src=\"Assets/Sensor.png?p=".$scon[$i]['pipename']."\" width=\"30\"><br><a href=\"viewsensor.php?p=".$scon[$i]['pipename']."\">View Sensor</a></td>\n\r";
   			echo "<td style=\"width: 100px\">".$scon[$i]['pipename']."</td>\n\r";
   			echo "<td style=\"width: 100px\">".date('Y.d.m H:i:s T', $scon[$i]['created'])."</td>\n\r";
   			echo "<td style=\"width: 100px\">".date('Y.d.m H:i:s T', $scon[$i]['date'])."</td>\n\r";

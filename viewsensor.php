@@ -136,7 +136,7 @@ function createMap()
    
    // add "my location" pushpin 
    loc = new Microsoft.Maps.Location(<?php echo "".$lat."";?>,<?php echo "".$lon."";?>);
-   pin = new Microsoft.Maps.Pushpin(loc, {icon: '\\Assets\\Marker.png', width: 48, height: 48}); 
+   pin = new Microsoft.Maps.Pushpin(loc, {icon: 'Assets/Marker.png', width: 48, height: 48}); 
    
    Microsoft.Maps.Pushpin.prototype.title = null;
    Microsoft.Maps.Pushpin.prototype.description = null;
