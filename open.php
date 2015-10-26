@@ -182,7 +182,7 @@ try{
         $tableRestProxy->createTable($scon_pipename.$timestamp);
       }
       catch(ServiceException $e){
-          $err = "tableerror ".$error_message
+          $err = "tableerror ".$error_message;
           echoresult("ERROR",$timestamp,$err);
           die();
       }
